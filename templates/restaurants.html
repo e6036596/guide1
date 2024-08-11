@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/restaurants.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1>Рестораны в {{ country.name }}</h1>
+    </div>
+    <div class="container">
+        <div class="topnav">
+            <a href="{{ url_for('landmarks', country_id=country.id) }}">Достопримечательности</a>
+            <a href="{{ url_for('hotels', country_id=country.id) }}">Отели</a>
+            <a href="{{ url_for('restaurants', country_id=country.id) }}" class="active">Рестораны</a>
+            <button id='restaurant_add_btn' 
+                    type="button" 
+                    class="btn btn-primary add-item"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#addRestaurantModal">
+                Добавить
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                </svg>
+            </button>
+            <a href="{{ url_for('country_details', country_id=country.id) }}">Назад</a>
+        </div>
+        <div class="white-box">
+            {% for restaurant in restaurants %}
+            <div class="item">
+                <strong>{{ restaurant.name }}</strong>
+                <p>Адрес: {{ restaurant.address }}</p>
+                <p>Кухня: {{ restaurant.cuisine }}</p>
+                <button type="button" 
+                        class="btn btn-secondary"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#editRestaurantModal"
+                        onclick="editRestaurant({{ restaurant }})">
+                    Редактировать
+                </button>
+                <button type="button" 
+                class="btn btn-danger"
+                onclick="deleteRestaurant({{ restaurant.id }})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                </svg>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="addRestaurantModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить ресторан</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addRestaurantForm">
+                        <div class="mb-3">
+                            <label for="restaurant_name_input" class="form-label">Название</label>
+                            <input type="text" id="restaurant_name_input" class="form-control" placeholder="Название ресторана">
+                        </div>
+                        <div class="mb-3">
+                            <label for="restaurant_address_input" class="form-label">Адрес</label>
+                            <input type="text" id="restaurant_address_input" class="form-control" placeholder="Адрес">
+                        </div>
+                        <div class="mb-3">
+                            <label for="restaurant_description_input" class="form-label">Описание</label>
+                            <textarea id="restaurant_description_input" class="form-control" placeholder="Описание"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="addRestaurantBtn" onclick="addRestaurant()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="editRestaurantModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать ресторан</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editRestaurantForm">
+                        <div class="mb-3">
+                            <label for="edit_restaurant_name" class="form-label">Название</label>
+                            <input type="text" class="form-control" id="edit_restaurant_name" name="restaurant_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_restaurant_address" class="form-label">Адрес</label>
+                            <input type="text" class="form-control" id="edit_restaurant_address" name="restaurant_address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_restaurant_description" class="form-label">Описание</label>
+                            <textarea class="form-control" id="edit_restaurant_description" name="restaurant_description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="saveRestaurantChangesBtn" onclick="saveRestaurantData()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/restaurants.js') }}"></script>
+{% endblock %}

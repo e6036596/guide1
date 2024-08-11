@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hotels.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1>Отели в {{ country.name }}</h1>
+    </div>
+    <div class="container">
+        <div class="topnav">
+            <a href="{{ url_for('landmarks', country_id=country.id) }}">Достопримечательности</a>
+            <a href="{{ url_for('hotels', country_id=country.id) }}" class="active">Отели</a>
+            <a href="{{ url_for('restaurants', country_id=country.id) }}">Рестораны</a>
+            <button id='hotel_add_btn' 
+                    type="button" 
+                    class="btn btn-primary add-item"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#addHotelModal">
+                Добавить
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                </svg>
+            </button>
+            <a href="{{ url_for('country_details', country_id=country.id) }}">Назад</a>
+        </div>
+        <div class="white-box">
+            {% for hotel in hotels %}
+            <div class="item">
+                <strong>{{ hotel.name }}</strong>
+                <p>Адрес: {{ hotel.address }}</p>
+                <p>Рейтинг: {{ hotel.rating }}</p>
+                <button type="button" 
+                        class="btn btn-secondary"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#editHotelModal"
+                        onclick="editHotel({{ hotel }})">
+                    Редактировать
+                </button>
+                <button type="button" 
+                class="btn btn-danger"
+                onclick="deleteHotrl({{ hotel.id }})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+            </svg>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="addHotelModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить отель</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addHotelForm">
+                        <div class="mb-3">
+                            <label for="hotel_name_input" class="form-label">Название</label>
+                            <input type="text" id="hotel_name_input" class="form-control" placeholder="Название отеля">
+                        </div>
+                        <div class="mb-3">
+                            <label for="hotel_address_input" class="form-label">Адрес</label>
+                            <input type="text" id="hotel_address_input" class="form-control" placeholder="Адрес">
+                        </div>
+                        <div class="mb-3">
+                            <label for="hotel_description_input" class="form-label">Описание</label>
+                            <textarea id="hotel_description_input" class="form-control" placeholder="Описание"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="addHotelBtn" onclick="addHotel()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="editHotelModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать отель</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editHotelForm">
+                        <div class="mb-3">
+                            <label for="edit_hotel_name" class="form-label">Название</label>
+                            <input type="text" class="form-control" id="edit_hotel_name" name="hotel_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_hotel_address" class="form-label">Адрес</label>
+                            <input type="text" class="form-control" id="edit_hotel_address" name="hotel_address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_hotel_description" class="form-label">Описание</label>
+                            <textarea class="form-control" id="edit_hotel_description" name="hotel_description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="saveHotelChangesBtn" onclick="saveHotelData()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='js/hotels.js') }}"></script>
+{% endblock %}

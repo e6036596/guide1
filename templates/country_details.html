@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Guide - Country Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/country_details.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Детали-{{ country.name }}</h1>
+    </div>
+    <div class="topnav">
+        <a href="{{ url_for('landmarks', country_id=country.id) }}">Достопримечательности</a>
+        <a href="{{ url_for('hotels', country_id=country.id) }}">Отели</a>
+        <a href="{{ url_for('restaurants', country_id=country.id) }}">Рестораны</a>
+        <a href="{{ url_for('index')}}">Назад</a>
+    </div>
+    <div class="container">
+        <div class="white-box">
+            <p><strong>Название страны:</strong> {{ country.name }}</p>
+        </div>
+    </div>
+</body>
+</html>

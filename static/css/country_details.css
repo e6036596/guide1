@@ -1,0 +1,75 @@
+/* Основной стиль для всего документа */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Стиль для заголовка и навигационной панели */
+.header, .topnav {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #343a40; /* Граница снизу */
+}
+
+.topnav {
+    overflow: hidden;
+    padding: 0; /* Убираем отступы */
+    margin: 0; /* Убираем отступы */
+    border-bottom: 1px solid #868686; /* Граница снизу для разделения с основным содержимым */
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: #868686;
+}
+
+.topnav a.active {
+    background-color: #868686;
+    color: white;
+}
+
+/* Контейнер для основного содержимого */
+.container {
+    padding: 20px;
+}
+
+/* Основной стиль для белого блока с контентом */
+.white-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.white-box p {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Стили для ссылок внутри белого блока */
+.white-box a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.white-box a:hover {
+    text-decoration: underline;
+}
+
