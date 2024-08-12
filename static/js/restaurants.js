@@ -22,7 +22,7 @@ function addRestaurant() {
         alert('Ресторан добавлен в БД');
         window.location.reload();
     }).catch(error => {
-        alert('Ошибка при добавлении ресторана в БД: ' + error);
+        alert('Ошибка при добавлении ресторана в БД ' );
     });
 }
 
@@ -44,7 +44,7 @@ function deleteRestaurant(restaurantId) {
         alert('Ресторан удален из БД');
         window.location.reload();
     }).catch(error => {
-        alert('Ошибка при удалении ресторана: ' + error);
+        alert('Ошибка при удалении ресторана');
     });
 }
 

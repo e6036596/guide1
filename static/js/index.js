@@ -1,52 +1,51 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const addCountryBtn = document.getElementById('addCountryBtn');
-    
-    addCountryBtn.addEventListener('click', function () {
-        const name = document.getElementById('country_name_input').value;
-        
-        fetch('/country', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: name }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'OK') {
-                location.reload();
-            } else {
-                alert('Ошибка при добавлении страны');
-            }
-        })
-        .catch(error => {
-            console.error('Ошибка:', error);
-        });
-    });
+'use strinct'
 
-    const deleteCountryBtns = document.querySelectorAll('.delete-country-btn');
+
+// add button function
+const addBtn = document.getElementById('addBtn')
+
+addBtn.onclick = () => {
+    const name = document.getElementById('add_name').value
     
-    deleteCountryBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const countryId = this.getAttribute('data-country-id');
-            
-            fetch(`/country/${countryId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'OK') {
-                    location.reload();
-                } else {
-                    alert('Ошибка при удалении страны');
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-            });
-        });
+    const data = {
+        name: name,
+    }
+
+    fetch('http://127.0.0.1:5000/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json()
+    }).then(data => {
+        alert('Данные успено сохранены в БД,')
+        window.location.reload()
+    }).catch(error => {
+        alert('Ошибка при добавлении в БД,', error)
+    })
+}
+
+// delete button
+
+function deleteCountry(countryId) {
+    fetch(`/country_details/${countryId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'OK') {
+            console.log('Страна удалена');
+            window.location.href = '/'; 
+        } else {
+            console.error('Ошибка при удалении страны');
+        }
     });
-});
+}

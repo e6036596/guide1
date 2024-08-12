@@ -7,7 +7,7 @@ function addLandmark() {
         history: document.getElementById('landmark_history_input').value
     };
 
-    fetch('http://127.0.0.1:8000/landmarks', {
+    fetch('http://127.0.0.1:5000/landmarks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ function addLandmark() {
 function deleteLandmark(landmarkId) {
     const data = { landmark_id: landmarkId };
 
-    fetch('http://127.0.0.1:8000/landmarks', {
+    fetch('http://127.0.0.1:5000/landmarks', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ function saveLandmarkData() {
         landmark_id: landmark_id,
     };
 
-    fetch('http://127.0.0.1:8000/landmarks', {
+    fetch('http://127.0.0.1:5000/landmarks', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

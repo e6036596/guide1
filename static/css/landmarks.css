@@ -2,3 +2,80 @@
     float: right;
     margin: 20px;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+
+.header, .topnav {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #343a40; 
+}
+
+.topnav {
+    overflow: hidden;
+    padding: 0; 
+    margin: 0; 
+    border-bottom: 1px solid #868686; 
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: #868686;
+}
+
+.topnav a.active {
+    background-color: #868686;
+    color: white;
+}
+
+
+.container {
+    padding: 20px;
+}
+
+
+.white-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0; 
+}
+
+
+.white-box p {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+
+.white-box a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.white-box a:hover {
+    text-decoration: underline;
+}
+

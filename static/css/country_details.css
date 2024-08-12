@@ -6,23 +6,24 @@ body {
     background-color: #f8f9fa;
 }
 
-/* Стиль для заголовка и навигационной панели */
-.header, .topnav {
+/* Стиль для заголовка */
+.header {
     background-color: #343a40;
     color: #ffffff;
-}
-
-.header {
     padding: 20px;
     text-align: center;
-    border-bottom: 1px solid #343a40; /* Граница снизу */
 }
 
+/* Контейнер для основного содержимого */
+.container {
+    padding: 20px;
+}
+
+/* Стили для навигационной панели */
 .topnav {
+    background-color: #343a40;
     overflow: hidden;
-    padding: 0; /* Убираем отступы */
-    margin: 0; /* Убираем отступы */
-    border-bottom: 1px solid #868686; /* Граница снизу для разделения с основным содержимым */
+    margin-bottom: 20px;
 }
 
 .topnav a {
@@ -43,33 +44,31 @@ body {
     color: white;
 }
 
-/* Контейнер для основного содержимого */
-.container {
-    padding: 20px;
-}
-
 /* Основной стиль для белого блока с контентом */
 .white-box {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    margin-bottom: 20px; /* Отступ между белыми коробками */
+}
+
+.white-box h2 {
+    margin-bottom: 15px; /* Отступ после заголовка внутри коробки */
 }
 
 .white-box p {
-    margin: 0;
-    padding: 10px 0;
+    margin: 0 0 10px 0; /* Нижний отступ между параграфами */
     font-size: 16px;
     color: #333;
 }
 
 /* Стили для ссылок внутри белого блока */
 .white-box a {
-    color: #000000;
+    color: #007bff;
     text-decoration: none;
 }
 
 .white-box a:hover {
     text-decoration: underline;
 }
-

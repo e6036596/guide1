@@ -56,8 +56,9 @@ def country_details(country_id):
 @app.route('/landmarks/<int:country_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def landmarks(country_id):
     if request.method == 'GET':
+        country = Country.query.get_or_404(country_id)
         landmarks = get_landmarks_list(country_id)
-        return render_template('landmarks.html', landmarks=landmarks, country_id=country_id)
+        return render_template('landmarks.html', landmarks=landmarks, country_id=country_id, country=country)
     
     elif request.method == 'POST':
         landmark = Landmark(
@@ -93,8 +94,14 @@ def landmarks(country_id):
 @app.route('/hotels/<int:country_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def hotels(country_id):
     if request.method == 'GET':
+        ''' Получаем объект Country по country_id
+        Если на странице ты обращаешься к какому-то объекту (например country)
+        он должен быть обязательно передан в контексте на каждой странице.
+        Из ниоткуда или с другой страницы объект появиться не может))'''
+        country = Country.query.get_or_404(country_id)
+
         hotels = get_hotels_list(country_id)
-        return render_template('hotels.html', hotels=hotels, country_id=country_id)
+        return render_template('hotels.html', hotels=hotels, country_id=country_id, country=country)
     
     elif request.method == 'POST':
         hotel = Hotel(
@@ -130,8 +137,10 @@ def hotels(country_id):
 @app.route('/restaurants/<int:country_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def restaurants(country_id):
     if request.method == 'GET':
+        country = Country.query.get_or_404(country_id)
+
         restaurants = get_restaurants_list(country_id)
-        return render_template('restaurants.html', restaurants=restaurants, country_id=country_id)
+        return render_template('restaurants.html', restaurants=restaurants, country_id=country_id, country=country)
     
     elif request.method == 'POST':
         restaurant = Restaurant(

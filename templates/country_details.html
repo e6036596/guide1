@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Guide - Country Details</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/country_details.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="header">
@@ -16,9 +17,31 @@
         <a href="{{ url_for('restaurants', country_id=country.id) }}">Рестораны</a>
         <a href="{{ url_for('index')}}">Назад</a>
     </div>
-    <div class="container">
+ <div class="white-box">
+            <h2>Достопримечательности</h2>
+            {% for landmark in landmarks %}
+                <p><strong> </strong>{{ landmark.name }}</p>
+                <p>Адрес: {{ landmark.address }}</p>
+                <p>Описание: {{ landmark.history }}</p>
+            {% endfor %}
+        </div>
+
         <div class="white-box">
-            <p><strong>Название страны:</strong> {{ country.name }}</p>
+            <h2>Отели</h2>
+            {% for hotel in hotels %}
+                <p><strong>{{ hotel.name }}</strong></p>
+                <p>Адрес: {{ hotel.address }}</p>
+                <p>Рейтинг: {{ hotel.rating }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="white-box">
+            <h2>Рестораны</h2>
+            {% for restaurant in restaurants %}
+                <p><strong>{{ restaurant.name }}</strong></p>
+                <p>Адрес: {{ restaurant.address }}</p>
+                <p>Кухня: {{ restaurant.cuisine }}</p>
+            {% endfor %}
         </div>
     </div>
 </body>

@@ -6,9 +6,7 @@
     <title>World Guide - Countries</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    
-    
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="header">
@@ -27,7 +25,7 @@
                 </svg>
             </button>
         </div>
-        <h1>Cписок Стран</h1>
+        <h1>Cписок стран</h1>
         <div class="white-box">
             <table>
                 <thead>
@@ -65,12 +63,12 @@
         </div>
     </div>
 
-    <div class="modal" tabindex="-1" id="addCountryModal">
+    <div class="modal fade" id="addCountryModal" tabindex="-1" aria-labelledby="addCountryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary" id="addBtn" onclick="addCountry()">Сохранить</button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCountryModalLabel">Добавить страну</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addCountryForm">
@@ -80,58 +78,18 @@
                         </div>
                     </form>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" onclick="addCountry()">Сохранить</button>
+                </div>
             </div>
         </div>
     </div>
+    
     {% block script %}
-    <script>
-        function addCountry() {
-            const countryName = document.getElementById('countryName').value;
-        
-            if (!countryName) {
-                alert('Введите название страны');
-                return;
-            }
-        
-            fetch('/add_country', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name: countryName })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'OK') {
-                    alert('Страна добавлена');
-                    location.reload(); 
-                } else {
-                    alert('Ошибка: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка при добавлении страны:', error);
-                alert('Произошла ошибка при добавлении страны.');
-            });
-        }
-        
-        function deleteCountry(countryId) {
-            fetch(`/country_details/${countryId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'OK') {
-                    console.log('Страна удалена');
-                    window.location.href = '/'; 
-                } else {
-                    console.error('Ошибка при удалении страны');
-                }
-            });
-        }
+    <script 
+    src="{{ url_for('static', filename='js/index.js') }}"
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
     </script>
 {% endblock %}
 </body>

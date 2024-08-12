@@ -190,3 +190,18 @@ body {
 .white-box td:nth-child(3) {
     padding-right: 0px; 
 }
+
+.white-box table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.white-box th, .white-box td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.white-box th, .white-box td {
+    font-size: 16px;
+}
